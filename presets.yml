@@ -1,0 +1,76 @@
+# 极简纯聊天预设（两个变体）
+# 用法：把本文件内容追加到 profile 的 cordis.patch.yml（0.2.0-rc.2 单数 dsh-agent-preset 声明）
+
+# ---- 变体 1：极简纯聊天（无官方提示词、几乎无工具）----
+- insert:
+    - id: preset-pure-chat
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: pure-chat
+        name: 极简纯聊天
+        description: 纯聊天：无工具、无官方提示词，只接收并回应用户对话。
+        order: 1
+        plugins:
+          - id: persona
+            name: '@deepseek-ai/dsh-persona'
+            config:
+              prefix: '你是用户的对话伙伴，直接回应用户的消息，不要调用工具。'
+              complete: true
+              includeRuntimeContext: false
+          - id: tool-fs
+            name: '@deepseek-ai/dsh-tool-fs'
+
+# ---- 变体 2：极简纯聊天 + 联网搜索 ----
+- insert:
+    - id: preset-pure-chat-web
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: pure-chat-web
+        name: 极简纯聊天·联网
+        description: 极简纯聊天 + 联网搜索：无官方提示词，保留极简工具 + web 搜索。
+        order: 2
+        plugins:
+          - id: persona
+            name: '@deepseek-ai/dsh-persona'
+            config:
+              prefix: '你是用户的对话伙伴。需要实时或联网信息时用 web_search / web_fetch 查询，其余时候直接回应用户的消息。'
+              complete: true
+              includeRuntimeContext: false
+          - id: tool-fs
+            name: '@deepseek-ai/dsh-tool-fs'
+          - id: tool-web
+            name: '@deepseek-ai/dsh-tool-web'
+            config:
+              fetch: true
+
+# ---- 变体 3：自由工具（白名单，可自由增删）----
+- insert:
+    - id: preset-free-tools
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: free-tools
+        name: 自由工具
+        description: 白名单工具模式：默认纯聊天，白名单里挂什么工具就能调什么工具，可自由增删。
+        order: 3
+        plugins:
+          - id: persona
+            name: '@deepseek-ai/dsh-persona'
+            config:
+              prefix: '你是用户的对话伙伴。默认直接回应用户的消息；需要时（查资料、读文件、搜索等）可以调用你拥有的工具，纯闲聊时不要多此一举。'
+              complete: true
+              includeRuntimeContext: false
+          # ══════════ 工具白名单（想加/删工具就改这里）══════════
+          # 加工具：复制下面两行，把 id/name 换成要的工具
+          #   可选内置工具包：
+          #   @deepseek-ai/dsh-tool-fs                → read/write/edit（读写文件）
+          #   @deepseek-ai/dsh-tool-web               → web_search/web_fetch（联网搜索）
+          #   @deepseek-ai/dsh-tool-pwsh              → pwsh（PowerShell）
+          #   @deepseek-ai/dsh-tool-fs-search         → 文件搜索
+          #   @deepseek-ai/dsh-tool-str-replace-editor → 文本编辑
+          # ═════════════════════════════════════════════════
+          - id: tool-fs
+            name: '@deepseek-ai/dsh-tool-fs'
+          - id: tool-web
+            name: '@deepseek-ai/dsh-tool-web'
+            config:
+              fetch: true

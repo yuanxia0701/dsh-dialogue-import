@@ -1,0 +1,26 @@
+{
+  "name": "@deepseek-ai/dsh-dialogue-import",
+  "description": "把对话文件（Chatbox HTML 导出 / JSON 备份 / 手写 Markdown）转成 DSH 原生会话，并注册极简纯聊天系列预设（pure-chat / pure-chat-web / free-tools）",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.1.0-rc.6 <0.3.0"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "~4.0.4 || 4.0.5-alpha.1",
+    "@deepseek-ai/dsh-tools": ">=0.1.0-rc.6 <0.3.0",
+    "@deepseek-ai/schemastery": "~3.18.4 || 3.18.5-alpha.1"
+  }
+}

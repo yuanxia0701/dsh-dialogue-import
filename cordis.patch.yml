@@ -1,0 +1,5 @@
+# dsh-dialogue-import — bundle patch: activation row for the profile layer.
+# 这个文件让包能被 `dsh plugin add` 安装、并作为 profile bundle 加载。
+- insert:
+    - id: dialogue-import
+      name: '@deepseek-ai/dsh-dialogue-import'
